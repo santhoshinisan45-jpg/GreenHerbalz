@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#554243",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1c1b1b",
+                        "on-tertiary-fixed-variant": "#5d4201",
+                        "tertiary-fixed-dim": "#e9c176",
+                        "on-secondary-fixed-variant": "#3a4b3a",
+                        "primary-fixed": "#ffdadb",
+                        "on-tertiary-fixed": "#261900",
+                        "secondary": "#526351",
+                        "primary-fixed-dim": "#ffb2b6",
+                        "surface-container-highest": "#e6e1e1",
+                        "surface-container": "#f2edec",
+                        "surface-bright": "#fdf8f8",
+                        "surface-tint": "#9b414a",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#4d0514",
+                        "surface-container-low": "#f7f2f2",
+                        "inverse-surface": "#323030",
+                        "on-secondary-container": "#566755",
+                        "tertiary-container": "#4d3600",
+                        "on-primary-fixed-variant": "#7c2a34",
+                        "on-primary-fixed": "#40000d",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#ddd9d8",
+                        "on-error": "#ffffff",
+                        "surface": "#fdf8f8",
+                        "secondary-container": "#d2e5ce",
+                        "background": "#fdf8f8",
+                        "inverse-primary": "#ffb2b6",
+                        "surface-variant": "#e6e1e1",
+                        "on-surface": "#1c1b1b",
+                        "outline-variant": "#dac0c1",
+                        "inverse-on-surface": "#f5f0ef",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#6b1d28",
+                        "on-tertiary-container": "#c39e57",
+                        "on-primary-container": "#ef848c",
+                        "on-secondary-fixed": "#101f11",
+                        "secondary-fixed": "#d5e8d1",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#ece7e6",
+                        "tertiary": "#312100",
+                        "outline": "#887272",
+                        "tertiary-fixed": "#ffdea5",
+                        "secondary-fixed-dim": "#b9ccb5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .marquee {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ── Scroll-Reveal Animation System ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Stagger delays */
+        .stagger-1 {
+            transition-delay: 0s;
+        }
+
+        .stagger-2 {
+            transition-delay: 0.12s;
+        }
+
+        .stagger-3 {
+            transition-delay: 0.24s;
+        }
+
+        .stagger-4 {
+            transition-delay: 0.36s;
+        }
+
+        /* Navbar shrink */
+        nav {
+            transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                background 0.4s ease,
+                box-shadow 0.4s ease;
+        }
+
+        nav.scrolled {
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+            background: rgba(250, 245, 245, 0.95);
+            box-shadow: 0 4px 30px rgba(77, 5, 20, 0.08);
+        }
+
+        html.dark nav.scrolled,
+        html.dark #mainNav.scrolled {
+            background: rgba(10, 10, 10, 0.95) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Navbar dark mode base */
+        html.dark #mainNav,
+        html.dark nav {
+            background: rgba(10, 10, 10, 0.9) !important;
+        }
+
+        /* Section divider line */
+        .section-line {
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #4d0514, transparent);
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-line.visible {
+            width: 100%;
+        }
+
+        /* Shimmer text */
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #4d0514 40%, #e9c176 50%, #4d0514 60%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+
+        /* Button magnetic hover */
+        .btn-magnetic {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s ease;
+        }
+
+        .btn-magnetic:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(77, 5, 20, 0.25);
+        }
+
+        .btn-magnetic:active {
+            transform: translateY(0px) scale(0.98);
+        }
+
+        /* Modal animation */
+        .ig-modal {
+            backdrop-filter: blur(8px);
+            transition: opacity 0.3s ease;
+        }
+
+        .ig-modal-content {
+            animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .reveal,
+            .reveal-left,
+            .reveal-right,
+            .reveal-scale {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+
+            .marquee-content {
+                animation: none !important;
+            }
+
+            .shimmer-text {
+                animation: none !important;
+                -webkit-text-fill-color: #4d0514 !important;
+            }
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        /* ── Premium Global Dark Mode ── */
+        html.dark {
+            filter: invert(1) hue-rotate(180deg);
+            background-color: #020707;
+        }
+
+        html.dark img,
+        html.dark video,
+        html.dark .material-symbols-outlined {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* ── Customizing Translate Dropdown ── */
+        #google_translate_element {
+            height: 26px !important;
+            overflow: hidden !important;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .goog-te-gadget {
+            font-size: 0 !important;
+            color: transparent !important;
+            line-height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .goog-te-gadget .goog-te-combo {
+            font-size: 11px !important;
+            color: #4d0514 !important;
+            padding: 2px 6px !important;
+            height: 24px !important;
+            width: 140px !important;
+            border-radius: 4px !important;
+            border: 1px solid #dac0c1 !important;
+            background-color: transparent !important;
+            margin: 0 !important;
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            -ms-appearance: none !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234d0514'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 6px center !important;
+            background-size: 5px 3px !important;
+            padding-right: 16px !important;
+            cursor: pointer !important;
+        }
+
+        .goog-te-gadget .goog-te-combo::-ms-expand {
+            display: none !important;
+        }
+
+        .goog-te-gadget .goog-te-arrow {
+            display: none !important;
+        }
+
+        .goog-te-gadget>span,
+        .goog-logo-link {
+            display: none !important;
+        }
+
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+
+        body {
+            top: 0 !important;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-surface font-body text-on-surface overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+    <!-- Top Navigation -->
+    <nav id="mainNav"
+        class="fixed top-0 w-full z-50 bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-xl flex justify-between items-center px-4 md:px-8 py-4">
+        <div class="flex items-center gap-3">
+            <img src="brand logo.png" alt="Green Herbalz Logo" class="h-10 md:h-12 w-auto object-contain">
+            <span class="text-2xl font-headline uppercase tracking-widest text-red-950 dark:text-white">Green
+                Herbalz</span>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-4">
+            <a class="hidden sm:block font-label text-[10px] uppercase tracking-widest text-primary dark:text-red-100 border-b border-primary/20"
+                href="#buy">Shop</a>
+            <a class="hidden sm:block font-label text-[10px] uppercase tracking-widest text-primary dark:text-red-100 border-b border-primary/20"
+                href="#about">About</a>
+            <a class="hidden sm:block font-label text-[10px] uppercase tracking-widest text-primary dark:text-red-100 border-b border-primary/20"
+                href="#faq">Have Questions?</a>
+            <a class="hidden sm:block font-label text-[10px] uppercase tracking-widest text-primary dark:text-red-100 border-b border-primary/20"
+                href="#contact">Contact</a>
+            <a class="hidden sm:block font-label text-[10px] uppercase tracking-widest text-pink-600 dark:text-pink-200 border-b border-pink-600 hover:border-pink-800"
+                href="https://www.instagram.com/_green.herbalz_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram</a>
+            <a class="hidden sm:block font-label text-[10px] uppercase tracking-widest text-red-600 dark:text-red-200 border-b border-red-600 hover:border-red-800"
+                href="https://youtube.com/@greenherbalz?si=aAMFiM1SClPQGlCb" target="_blank">YouTube</a>
+            <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-red-500 dark:text-red-200 text-xl hidden md:block"
+                    data-icon="language">language</span>
+                <div id="google_translate_element" class="scale-75 origin-right"></div>
+            </div>
+            <button id="themeToggle"
+                class="text-neutral-500 hover:text-primary dark:text-yellow-400 dark:hover:text-yellow-300 hover:opacity-100 transition-colors flex items-center">
+                <span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+            </button>
+            <button class="md:hidden text-red-500 dark:text-red-200">
+                <span class="material-symbols-outlined" data-icon="menu">menu</span>
+            </button>
+        </div>
+    </nav>
+    
+    
+    <!-- Soap Customizer Drawer -->
+    <div id="soapDrawer" class="fixed inset-y-0 right-0 w-[85%] sm:w-96 bg-surface z-[110] transform translate-x-full transition-transform duration-500 shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container">
+            <h2 class="font-headline text-2xl text-primary flex items-center gap-2">
+                <span class="material-symbols-outlined">dashboard</span> Customize Soap
+            </h2>
+            <button id="closeSoapDrawer" class="text-on-surface-variant hover:text-primary">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 flex-1 overflow-y-auto">
+            <div class="mb-8">
+                <h3 class="font-bold text-lg mb-4 text-on-surface">Shape</h3>
+                <div class="flex gap-2">
+                    <button type="button" class="mob-shape-btn flex-1 py-2 border border-outline-variant rounded-lg hover:border-primary transition-colors text-sm">Oval</button>
+                    <button type="button" class="mob-shape-btn flex-1 py-2 border border-outline-variant rounded-lg hover:border-primary transition-colors text-sm">Square</button>
+                    <button type="button" class="mob-shape-btn flex-1 py-2 border border-outline-variant rounded-lg hover:border-primary transition-colors text-sm">Round</button>
+                </div>
+            </div>
+            <div class="mb-8">
+                <h3 class="font-bold text-lg mb-4 text-on-surface">Weight</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" class="mob-weight-btn px-4 py-2 border border-outline-variant rounded-lg hover:border-primary transition-colors text-sm">50g</button>
+                    <button type="button" class="mob-weight-btn px-4 py-2 border border-outline-variant rounded-lg hover:border-primary transition-colors text-sm">100g</button>
+                    <button type="button" class="mob-weight-btn px-4 py-2 border border-outline-variant rounded-lg hover:border-primary transition-colors text-sm">150g</button>
+                </div>
+            </div>
+            <div class="mb-8">
+                <h3 class="font-bold text-lg mb-4 text-on-surface">Main Ingredient</h3>
+                <select id="mobileIngredientSelect" class="w-full p-3 border border-outline-variant rounded-lg bg-surface text-on-surface focus:ring-primary focus:border-primary text-sm" onchange="document.getElementById('mobileCustomIngredient').style.display = this.value === 'custom' ? 'block' : 'none'">
+                    <option>Neem & Tulsi (Purifying)</option>
+                    <option>Sandalwood & Turmeric (Glowing)</option>
+                    <option>Aloe Vera & Mint (Cooling)</option>
+                    <option>Charcoal & Tea Tree (Detox)</option>
+                    <option value="custom">Enter your own ingredient</option>
+                </select>
+                <input type="text" id="mobileCustomIngredient" placeholder="Type your custom ingredient..." class="w-full mt-3 p-3 border border-outline-variant rounded-lg bg-surface text-on-surface focus:ring-primary focus:border-primary text-sm" style="display: none;">
+            </div>
+        </div>
+        <div class="p-6 border-t border-outline-variant bg-surface-container-low">
+            <button id="mobileApplyOrderBtn" type="button" class="w-full py-4 bg-primary text-on-primary rounded-full font-bold uppercase tracking-widest hover:bg-primary-container hover:text-on-primary-container transition-colors btn-magnetic text-sm">
+                Apply & Order
+            </button>
+        </div>
+    </div>
+    <!-- Backdrop for drawer -->
+    <div id="soapBackdrop" class="fixed inset-0 bg-black/50 z-[105] hidden opacity-0 transition-opacity duration-500"></div>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="relative min-h-[85svh] flex items-end overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <video class="w-full h-full object-cover object-center transform-gpu will-change-transform" style="transform: translateZ(0);" preload="auto" autoplay loop muted playsinline>
+                    <source src="lipstick-video.mp4" type="video/mp4" />
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/20 to-transparent"></div>
+            </div>
+            <div class="relative z-10 p-8 w-full reveal-left">
+                <h1
+                    class="text-6xl md:text-8xl font-headline italic tracking-tight text-surface-bright leading-[0.9] -mb-2">
+                    Nature's<br />Resilience.
+                </h1>
+                <p class="mt-6 text-surface-container-low font-body max-w-xs text-lg leading-relaxed">
+                    High-performance, 100% handmade botanical skincare crafted for the modern apothecary.
+                </p>
+                <div class="mt-10">
+                    <button onclick="document.getElementById('buy').scrollIntoView({behavior: 'smooth'})"
+                        class="btn-magnetic bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-lg font-label uppercase tracking-widest text-sm font-bold shadow-xl">
+                        Shop the Ritual
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- Marquee Scroll -->
+        <section class="bg-primary py-4 marquee overflow-hidden">
+            <div
+                class="marquee-content flex gap-12 text-on-primary font-label text-xs uppercase tracking-[0.2em] font-extrabold">
+                <span>100% Handmade Batches</span>
+                <span>•</span>
+                <span>Cruelty-Free &amp; Vegan</span>
+                <span>•</span>
+                <span>Sustainable Packaging</span>
+                <span>•</span>
+                <span>Dermatologist Approved</span>
+                <span>•</span>
+                <span>Free shipping on orders over ₹75</span>
+                <span>•</span>
+                <span>Cruelty-Free &amp; Vegan</span>
+                <span>•</span>
+                <span>Sustainable Packaging</span>
+                <span>•</span>
+                <span>Dermatologist Approved</span>
+            </div>
+        </section>
+        <!-- Product Scroll -->
+        <section class="py-20 bg-surface overflow-hidden">
+            <div class="section-line mx-auto mb-8 px-8 reveal"></div>
+            <div class="px-8 mb-8 flex justify-between items-end reveal">
+                <div>
+                    <h2 class="font-headline italic text-4xl text-primary leading-none shimmer-text">The Collection</h2>
+                    <p class="font-label text-xs uppercase tracking-widest mt-2 text-outline">Botanical Mastery</p>
+                </div>
+                <a class="font-label text-xs uppercase tracking-widest border-b border-primary pb-1 text-primary"
+                    href="#buy">View All</a>
+            </div>
+            <div class="product-slider snap-x snap-mandatory flex gap-4 overflow-x-auto hide-scrollbar px-8 pb-4 -mx-8">
+                <!-- Product Card 1 -->
+                <div class="product-card flex-shrink-0 w-[55%] sm:w-[45%] md:w-[35%] lg:w-[25%] snap-center group reveal-scale stagger-1">
+                    <div class="relative bg-surface-container-low aspect-[4/5] overflow-hidden rounded-lg">
+                        <video
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 transform-gpu will-change-transform" style="transform: translateZ(0);"
+                            autoplay loop muted playsinline preload="metadata">
+                            <source src="lip-balm-video.mp4" type="video/mp4" />
+                        </video>
+                        <div
+                            class="absolute top-4 left-4 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                            New Arrival
+                        </div>
+                    </div>
+                    <div class="mt-4 flex flex-col gap-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-headline text-xl sm:text-2xl text-on-surface">Malachite Rose Balm</h3>
+                                <p class="font-label text-[10px] sm:text-xs text-outline mt-1 uppercase tracking-wider">Restoring Treatment</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-body text-base sm:text-lg font-semibold text-primary">₹30</span>
+                                <p class="text-[10px] text-outline">Min order: 8</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 2 -->
+                <div class="product-card flex-shrink-0 w-[55%] sm:w-[45%] md:w-[35%] lg:w-[25%] snap-center group reveal-scale stagger-2">
+                    <div class="relative bg-surface-container-low aspect-[4/5] overflow-hidden rounded-lg">
+                        <video
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 transform-gpu will-change-transform" style="transform: translateZ(0);"
+                            autoplay loop muted playsinline preload="metadata">
+                            <source src="henna-video.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <div class="mt-4 flex flex-col gap-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-headline text-xl sm:text-2xl text-on-surface">Botanical Cones</h3>
+                                <p class="font-label text-[10px] sm:text-xs text-outline mt-1 uppercase tracking-wider">Ancient Ritual Set</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-body text-base sm:text-lg font-semibold text-primary">₹30</span>
+                                <p class="text-[10px] text-outline">Min order: 8</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 3 -->
+                <div class="product-card flex-shrink-0 w-[55%] sm:w-[45%] md:w-[35%] lg:w-[25%] snap-center group reveal-scale stagger-3">
+                    <div class="relative bg-surface-container-low aspect-[4/5] overflow-hidden rounded-lg">
+                        <img alt="Nature's deepest hue lip and cheek tint" loading="lazy"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 transform-gpu will-change-transform" style="transform: translateZ(0);"
+                            src="create_extra_4_202604081640-Picsart-AiImageEnhancer.png"
+                            onerror="this.src='https://placehold.co/400x500/ffb2b6/4d0514?text=Lipstick'"
+                        />
+                    </div>
+                    <div class="mt-4 flex flex-col gap-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-headline text-xl sm:text-2xl text-on-surface">Lipstick</h3>
+                                <p class="font-label text-[10px] sm:text-xs text-outline mt-1 uppercase tracking-wider">Multi-use Pigment</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-body text-base sm:text-lg font-semibold text-primary">₹110</span>
+                                <p class="text-[10px] text-outline">Min order: 4</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center gap-2 mt-4 md:hidden">
+                <span class="slider-dot w-2 h-2 rounded-full bg-primary"></span>
+                <span class="slider-dot w-2 h-2 rounded-full bg-outline-variant"></span>
+                <span class="slider-dot w-2 h-2 rounded-full bg-outline-variant"></span>
+            </div>
+        </section>
+
+        <!-- New Botanical Soaps Section -->
+        <section class="py-20 px-8 bg-surface-container-low" id="soaps">
+            <div class="flex flex-col gap-8 items-center text-center">
+                <div class="reveal">
+                    <span class="text-tertiary-fixed-dim uppercase tracking-[0.2em] text-[10px] font-bold mb-2 block">Bespoke Cleansing</span>
+                    <h2 class="font-headline text-4xl text-primary mb-4 italic">Artisan Soaps.</h2>
+                    <p class="text-on-surface-variant text-sm mb-8 leading-relaxed font-light px-4">
+                        Discover our new collection of handcrafted botanical soaps. Tailor your cleansing ritual by choosing your preferred shape, weight, and key botanical ingredients.
+                    </p>
+                    <button class="open-soap-drawer mx-auto flex items-center justify-center gap-2 px-6 py-3 bg-primary text-on-primary rounded-full hover:bg-primary-container hover:text-on-primary-container transition-all btn-magnetic font-label text-xs uppercase tracking-widest shadow-lg">
+                        <span class="material-symbols-outlined text-sm">dashboard</span>
+                        Customize Options
+                    </button>
+                </div>
+                <div class="w-full relative aspect-[4/3] rounded-2xl overflow-hidden reveal-scale shadow-lg">
+                    <!-- Placeholder premium soap image or background -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-[#d2e5ce] to-[#526351]"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-white/80 font-headline italic text-2xl">
+                        Handcrafted
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            .ig-modal {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 100;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .ig-modal.active {
+                display: flex;
+            }
+
+            .ig-modal-content {
+                background: #fff;
+                padding: 24px;
+                border-radius: 12px;
+                max-width: 90%;
+                width: 360px;
+            }
+        </style>
+        <!-- Buy Section -->
+        <section class="py-20 bg-surface overflow-hidden" id="buy">
+            <div class="section-line mx-auto mb-8 px-8 reveal"></div>
+            <div class="px-8 mb-8 reveal">
+                <h2 class="font-headline italic text-4xl text-primary leading-none shimmer-text">Shop Now</h2>
+                <p class="font-label text-xs uppercase tracking-widest mt-2 text-outline">Contact & Buy via Instagram
+                </p>
+            </div>
+            <div class="buy-slider snap-x snap-mandatory flex gap-4 overflow-x-auto hide-scrollbar px-8 pb-4 -mx-8">
+                <!-- Product 1 -->
+                <div class="buy-card flex-shrink-0 w-[55%] sm:w-[50%] md:w-[40%] lg:w-[30%] snap-center group reveal-scale stagger-1">
+                    <div class="relative bg-surface-container-low aspect-[4/5] overflow-hidden rounded-lg group">
+                        <img alt="Luxury Product 1" class="w-full h-full object-cover transform-gpu absolute inset-0 z-10 group-hover:opacity-0 transition-opacity duration-300" style="transform: translateZ(0);" loading="lazy"
+                            src="A_high-end_luxury_202604081654.png" />
+                        <video class="w-full h-full object-cover transform-gpu will-change-transform opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="transform: translateZ(0);"
+                            autoplay loop muted playsinline preload="metadata">
+                            <source src="henna-video.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <div class="mt-4 flex flex-col gap-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-headline text-xl sm:text-2xl text-on-surface">Herbal-Henna cone</h3>
+                                <p class="font-label text-[10px] sm:text-xs text-outline mt-1 uppercase tracking-wider">Premium Herbal Formula</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-body text-base sm:text-lg font-semibold text-primary">₹30</span>
+                                <p class="text-[10px] text-outline">Min order: 8</p>
+                            </div>
+                        </div>
+                        <button onclick="openIgModal('Herbal-Henna cone', '₹30')"
+                            class="w-full py-3 bg-primary text-on-primary font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Contact & Buy via Instagram
+                        </button>
+                        <button onclick="sendToWhatsApp('Herbal-Henna cone', '₹30', 8)"
+                            class="w-full py-3 bg-green-600 text-white font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Buy via WhatsApp
+                        </button>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="buy-card flex-shrink-0 w-[55%] sm:w-[50%] md:w-[40%] lg:w-[30%] snap-center group reveal-scale stagger-2">
+                    <div class="relative bg-surface-container-low aspect-[4/5] overflow-hidden rounded-lg group">
+                        <img alt="Luxury Product 2" class="w-full h-full object-cover transform-gpu absolute inset-0 z-10 group-hover:opacity-0 transition-opacity duration-300" style="transform: translateZ(0);" loading="lazy"
+                            src="A_hyper-realistic,_luxury_202604081647-Picsart-AiImageEnhancer.png" />
+                        <video class="w-full h-full object-cover transform-gpu will-change-transform opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="transform: translateZ(0);"
+                            autoplay loop muted playsinline preload="metadata">
+                            <source src="lip-balm-video.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <div class="mt-4 flex flex-col gap-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-headline text-xl sm:text-2xl text-on-surface">Botanical Essence - lipbalm</h3>
+                                <p class="font-label text-[10px] sm:text-xs text-outline mt-1 uppercase tracking-wider">Natural Extract</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-body text-base sm:text-lg font-semibold text-primary">₹30</span>
+                                <p class="text-[10px] text-outline">Min order: 8</p>
+                            </div>
+                        </div>
+                        <button onclick="openIgModal('Botanical Essence - lipbalm', '₹30')"
+                            class="w-full py-3 bg-primary text-on-primary font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Contact & Buy via Instagram
+                        </button>
+                        <button onclick="sendToWhatsApp('Botanical Essence - lipbalm', '₹30', 8)"
+                            class="w-full py-3 bg-green-600 text-white font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Buy via WhatsApp
+                        </button>
+                        <button onclick="openCustomizeModal('Botanical Essence - lipbalm')"
+                            class="w-full py-2 bg-secondary text-on-secondary font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-secondary-container transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">edit</span>
+                            Customize Ingredients
+                        </button>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="buy-card flex-shrink-0 w-[55%] sm:w-[50%] md:w-[40%] lg:w-[30%] snap-center group reveal-scale stagger-3">
+                    <div class="relative bg-surface-container-low aspect-[4/5] overflow-hidden rounded-lg group">
+                        <img alt="Luxury Product 3" class="w-full h-full object-cover transform-gpu absolute inset-0 z-10 group-hover:opacity-0 transition-opacity duration-300" style="transform: translateZ(0);" loading="lazy"
+                            src="create_extra_4_202604081640-Picsart-AiImageEnhancer.png" />
+                        <video class="w-full h-full object-cover transform-gpu will-change-transform opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="transform: translateZ(0);"
+                            autoplay loop muted playsinline preload="metadata">
+                            <source src="lipstick-video.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <div class="mt-4 flex flex-col gap-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-headline text-xl sm:text-2xl text-on-surface">Herbal Infusion - lipstick</h3>
+                                <p class="font-label text-[10px] sm:text-xs text-outline mt-1 uppercase tracking-wider">Traditional Remedy</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-body text-base sm:text-lg font-semibold text-primary">₹110</span>
+                                <p class="text-[10px] text-outline">Min order: 4</p>
+                            </div>
+                        </div>
+                        <button onclick="openIgModal('Herbal Infusion - lipstick', '₹110')"
+                            class="w-full py-3 bg-primary text-on-primary font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Contact & Buy via Instagram
+                        </button>
+                        <button onclick="sendToWhatsApp('Herbal Infusion - lipstick', '₹110', 4)"
+                            class="w-full py-3 bg-green-600 text-white font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Buy via WhatsApp
+                        </button>
+                        <button onclick="openCustomizeModal('Herbal Infusion - lipstick')"
+                            class="w-full py-2 bg-secondary text-on-secondary font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-secondary-container transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">edit</span>
+                            Customize Ingredients
+                        </button>
+                    </div>
+                </div>
+                <!-- Product 4: Soap -->
+                <div class="buy-card flex-shrink-0 w-[55%] sm:w-[50%] md:w-[40%] lg:w-[30%] snap-center group reveal-scale stagger-4">
+                    <div class="relative bg-surface-container-low aspect-[4/5] overflow-hidden rounded-lg">
+                        <img alt="Soap herbal soap" class="w-full h-full object-cover transform-gpu will-change-transform" style="transform: translateZ(0);" loading="lazy"
+                            src="show_the_top_202604082233.png" />
+                    </div>
+                    <div class="mt-4 flex flex-col gap-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-headline text-xl sm:text-2xl text-on-surface">Soap</h3>
+                                <p class="font-label text-[10px] sm:text-xs text-outline mt-1 uppercase tracking-wider">Herbal Cleansing Bar</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-body text-base sm:text-lg font-semibold text-primary">₹60</span>
+                                <p class="text-[10px] text-outline">Min order: 4</p>
+                            </div>
+                        </div>
+                        <button onclick="openIgModal('Soap', '₹60')"
+                            class="w-full py-3 bg-primary text-on-primary font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Contact & Buy via Instagram
+                        </button>
+                        <button onclick="sendToWhatsApp('Soap', '₹60', 4)"
+                            class="w-full py-3 bg-green-600 text-white font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Buy via WhatsApp
+                        </button>
+                        <button onclick="openCustomizeModal('Soap')"
+                            class="w-full py-2 bg-secondary text-on-secondary font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-secondary-container transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">edit</span>
+                            Customize Ingredients
+                        </button>
+                    </div>
+                </div>
+                <!-- Product 5: Rosemary Oil -->
+                <div class="buy-card flex-shrink-0 w-[55%] sm:w-[50%] md:w-[40%] lg:w-[30%] snap-center group reveal-scale stagger-5">
+                    <div class="relative bg-surface-container-low aspect-[4/5] overflow-hidden rounded-lg group">
+                        <img alt="Rosemary Oil" class="w-full h-full object-cover transform-gpu absolute inset-0 z-10 group-hover:opacity-0 transition-opacity duration-300" style="transform: translateZ(0);" loading="lazy"
+                            src="rosemary oil image.jpeg" />
+                        <video class="w-full h-full object-cover transform-gpu will-change-transform opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="transform: translateZ(0);"
+                            autoplay loop muted playsinline preload="metadata">
+                            <source src="rosemary oil video.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <div class="mt-4 flex flex-col gap-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-headline text-xl sm:text-2xl text-on-surface">Rosemary Oil</h3>
+                                <p class="font-label text-[10px] sm:text-xs text-outline mt-1 uppercase tracking-wider">Pure Herbal Extract</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-body text-base sm:text-lg font-semibold text-primary">₹160</span>
+                                <p class="text-[10px] text-outline">Min order: 4</p>
+                            </div>
+                        </div>
+                        <button onclick="openIgModal('Rosemary Oil', '₹160')"
+                            class="w-full py-3 bg-primary text-on-primary font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Contact & Buy via Instagram
+                        </button>
+                        <button onclick="sendToWhatsApp('Rosemary Oil', '₹160', 4)"
+                            class="w-full py-3 bg-green-600 text-white font-label text-[10px] sm:text-xs uppercase tracking-widest font-bold rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">chat</span>
+                            Buy via WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center gap-2 mt-4 md:hidden">
+                <span class="buy-slider-dot w-2 h-2 rounded-full bg-primary"></span>
+                <span class="buy-slider-dot w-2 h-2 rounded-full bg-outline-variant"></span>
+                <span class="buy-slider-dot w-2 h-2 rounded-full bg-outline-variant"></span>
+                <span class="buy-slider-dot w-2 h-2 rounded-full bg-outline-variant"></span>
+            </div>
+        </section>
+        <!-- Instagram Modal -->
+        <div id="igModal" class="ig-modal">
+            <div class="ig-modal-content">
+                <h3 class="font-headline text-xl text-primary mb-4">Order Details</h3>
+                <p id="modalProductName" class="font-body text-sm text-outline mb-4"></p>
+                <input type="hidden" id="modalProduct" value="">
+                <div class="flex flex-col gap-4">
+                    <label class="font-label text-xs uppercase tracking-widest text-outline">Quantity</label>
+                    <input type="number" id="modalQuantity" min="1" value="1"
+                        class="border border-outline-variant rounded-md px-4 py-3 font-body text-sm"
+                        placeholder="Enter quantity">
+                </div>
+                <div class="flex gap-4 mt-6">
+                    <button onclick="closeIgModal()"
+                        class="flex-1 py-3 border border-outline-variant font-label text-xs uppercase tracking-widest rounded-md">Cancel</button>
+                    <button onclick="sendToInstagram()"
+                        class="flex-1 py-3 bg-primary text-on-primary font-label text-xs uppercase tracking-widest font-bold rounded-md hover:bg-primary-container transition-colors">Send
+                        Message</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function openIgModal(product, price) {
+                document.getElementById('modalProduct').value = product + ' - ' + price;
+                document.getElementById('modalProductName').textContent = product + ' (' + price + ')';
+                document.getElementById('igModal').classList.add('active');
+            }
+            function closeIgModal() {
+                document.getElementById('igModal').classList.remove('active');
+            }
+            function sendToInstagram() {
+                var product = document.getElementById('modalProduct').value;
+                var qty = document.getElementById('modalQuantity').value;
+                var message = 'Hi! I want to buy:\n\nProduct: ' + product + '\nQuantity: ' + qty + '\n\nPlease confirm availability.';
+                var tempInput = document.createElement('textarea');
+                tempInput.value = message;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                alert('Order details copied to clipboard! Please paste them in the chat.');
+                window.open('https://www.instagram.com/_green.herbalz_?igsh=aXBxZ2Ztb3Bwajk4', '_blank');
+                closeIgModal();
+            }
+            function sendToWhatsApp(product, price, minOrder) {
+                var message = 'Hi! I want to buy:\n\nProduct: ' + product + '\nPrice: ' + price + '\nMinimum order: ' + minOrder + '\n\nPlease confirm availability.';
+                var waUrl = 'https://wa.me/9942738921?text=' + encodeURIComponent(message);
+                window.open(waUrl, '_blank');
+            }
+            function openCustomizeModal(productName) {
+                var message = 'Hi! I would like to customize my ' + productName + ' with specific ingredients. Please help me create my custom blend.';
+                var tempInput = document.createElement('textarea');
+                tempInput.value = message;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                alert('Customization request copied to clipboard! Please paste it in the chat.');
+                window.open('https://www.instagram.com/_green.herbalz_?igsh=aXBxZ2Ztb3Bwajk4', '_blank');
+            }
+            
+            function initSliderIndicators() {
+                const productSlider = document.querySelector('.product-slider');
+                const buySlider = document.querySelector('.buy-slider');
+                
+                if (productSlider) {
+                    const dots = document.querySelectorAll('.slider-dot');
+                    productSlider.addEventListener('scroll', () => {
+                        const scrollLeft = productSlider.scrollLeft;
+                        const cardWidth = productSlider.querySelector('.product-card')?.offsetWidth || 0;
+                        const gap = 16;
+                        const index = Math.round(scrollLeft / (cardWidth + gap));
+                        dots.forEach((dot, i) => {
+                            dot.classList.toggle('bg-primary', i === index);
+                            dot.classList.toggle('bg-outline-variant', i !== index);
+                        });
+                    });
+                }
+                
+                if (buySlider) {
+                    const dots = document.querySelectorAll('.buy-slider-dot');
+                    buySlider.addEventListener('scroll', () => {
+                        const scrollLeft = buySlider.scrollLeft;
+                        const cardWidth = buySlider.querySelector('.buy-card')?.offsetWidth || 0;
+                        const gap = 16;
+                        const index = Math.round(scrollLeft / (cardWidth + gap));
+                        dots.forEach((dot, i) => {
+                            dot.classList.toggle('bg-primary', i === index);
+                            dot.classList.toggle('bg-outline-variant', i !== index);
+                        });
+                    });
+                }
+            }
+            
+            document.addEventListener('DOMContentLoaded', initSliderIndicators);
+        </script>
+        <!-- Asymmetric Feature Section (Community/Identity) -->
+        <section id="about" class="bg-surface-container-low py-24 relative overflow-hidden">
+            <div class="section-line mx-auto mb-12 px-8 reveal"></div>
+            <div class="px-8 grid grid-cols-1 md:grid-cols-2 gap-16 relative z-10">
+                <div class="relative reveal-left">
+                    <div class="bg-primary p-12 text-on-primary">
+                        <h2 class="font-headline italic text-5xl mb-8 leading-tight">Grounded in Science, Rooted in
+                            Tradition.</h2>
+                        <p class="font-body text-lg leading-relaxed opacity-90 mb-12">
+                            We believe skincare is a ritual of reclamation. Our formulas combine potent plant actives
+                            with modern delivery systems to support your skin's natural barriers.
+                        </p>
+                        <a class="inline-block font-label text-sm uppercase tracking-[0.2em] border-b-2 border-on-tertiary-container pb-2 hover:opacity-80 transition-opacity"
+                            href="#buy">Our Rituals</a>
+                    </div>
+                    <!-- Decorative Floating Element -->
+                    <div
+                        class="hidden md:block absolute -right-20 -bottom-20 w-64 h-64 border-[1px] border-outline-variant opacity-30 rounded-full">
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center gap-12 reveal-right">
+                    <div class="flex gap-4 items-start">
+                        <span class="material-symbols-outlined text-primary text-4xl" data-icon="eco">eco</span>
+                        <div>
+                            <h4 class="font-headline text-xl mb-2 italic">100% Recyclable</h4>
+                            <p class="text-on-surface-variant font-body text-sm leading-relaxed">Our glass and aluminum
+                                packaging is designed to be infinitely repurposed or recycled.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <span class="material-symbols-outlined text-primary text-4xl"
+                            data-icon="local_florist">local_florist</span>
+                        <div>
+                            <h4 class="font-headline text-xl mb-2 italic">Wild Harvested</h4>
+                            <p class="text-on-surface-variant font-body text-sm leading-relaxed">Ingredients sourced
+                                ethically from regeneratively managed herbal farms.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <span class="material-symbols-outlined text-primary text-4xl" data-icon="science">science</span>
+                        <div>
+                            <h4 class="font-headline text-xl mb-2 italic">Clean Chemistry</h4>
+                            <p class="text-on-surface-variant font-body text-sm leading-relaxed">Free from synthetic
+                                fragrances, sulfates, parabens, and phthalates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Community Section -->
+        <section class="py-24 px-8 bg-surface">
+            <div class="section-line mx-auto mb-12 reveal"></div>
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-headline italic text-4xl text-primary shimmer-text">In the Wild</h2>
+                <p class="font-label text-xs uppercase tracking-widest mt-2 text-outline">Tagged #GreenHerbalzRitual</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 reveal-scale">
+                <div class="aspect-square bg-surface-container overflow-hidden group">
+                    <img alt="Botanical balm texture and ingredients"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                        src="A_high-end_luxury_202604081654.png" />
+                </div>
+                <div class="aspect-square bg-surface-container overflow-hidden group">
+                    <img alt="Botanical cream on display"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                        src="A_hyper-realistic,_luxury_202604081647-Picsart-AiImageEnhancer.png" />
+                </div>
+                <div class="aspect-square bg-surface-container overflow-hidden group">
+                    <img alt="Botanical ritual packaging"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                        src="create_extra_4_202604081640-Picsart-AiImageEnhancer.png" />
+                </div>
+                <div class="aspect-square bg-surface-container overflow-hidden group">
+                    <img alt="Macro shot of botanical ingredients"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmL3XmZtVG8GqZxZ2VAN42sRJ1emlxND6AJ2V-aoEw1kp26lRJOaO2EbrojyIE8SamhfHavlfriHXI5iztgZlb5pTOzsBzsO_k4fiZ3DLEc7CYVnI7w73n8DsHgCuD5lquyl11mQJqOol7I8L_ZBJbVN37mvQO9f1fRPMSs9ZeT39IH6XptFJCmj8CcuzcT2l_4I1JCXh82xzRdl6eB_M8DUWevC0xyke6HrLw8scwacrxqjO6scBADSuP_BtofcTn2Wb5r37I5BS9" />
+                </div>
+            </div>
+            <div class="mt-16 text-center">
+                <button onclick="window.open('https://www.instagram.com/_green.herbalz_/', '_blank')"
+                    class="font-label text-xs uppercase tracking-widest py-4 px-12 border border-outline-variant hover:border-primary transition-colors">
+                    Join the Community
+                </button>
+                <button onclick="window.open('https://youtube.com/@greenherbalz?si=aAMFiM1SClPQGlCb', '_blank')"
+                    class="font-label text-xs uppercase tracking-widest py-4 px-12 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors ml-4">
+                    Subscribe on YouTube
+                </button>
+                <p class="text-xs text-outline mt-3">Watch for new updates!</p>
+            </div>
+        </section>
+
+        <!-- Customer Testimonials Section -->
+        <section class="py-24 px-8 bg-surface">
+            <div class="max-w-screen-xl mx-auto">
+                <div class="section-line mx-auto mb-12 reveal"></div>
+                <div class="text-center mb-12 reveal">
+                    <span class="font-label text-[10px] uppercase tracking-[0.3em] text-secondary font-bold mb-4 block">What Our Customers Say</span>
+                    <h2 class="font-headline text-4xl text-primary italic shimmer-text">Loved by Many</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-500 reveal-scale stagger-1 group">
+                        <div class="flex gap-1 mb-4">
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                        </div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed font-light italic mb-6">"I've been using the Kuppameni soap for 3 months now and my skin has never felt this soft. You can really feel the difference with homemade products — no chemicals, just pure nature. Absolutely love it!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                                <span class="text-primary font-headline text-base">P</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-on-surface text-sm">Priya Lakshmi</h4>
+                                <p class="text-on-surface-variant text-xs">Thiruvarur, Tamil Nadu</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-500 reveal-scale stagger-2 group">
+                        <div class="flex gap-1 mb-4">
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                        </div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed font-light italic mb-6">"The herbal henna cone gave me the most beautiful, natural color. It's so smooth to apply and you can tell it's made with real care. My friends all want to know where I got it from!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
+                                <span class="text-secondary font-headline text-base">D</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-on-surface text-sm">Deepika Rajan</h4>
+                                <p class="text-on-surface-variant text-xs">Chennai, Tamil Nadu</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-500 reveal-scale stagger-3 group">
+                        <div class="flex gap-1 mb-4">
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                            <span class="material-symbols-outlined text-amber-400 text-lg" style="font-variation-settings:'FILL' 1">star</span>
+                        </div>
+                        <p class="text-on-surface-variant text-sm leading-relaxed font-light italic mb-6">"I ordered the lip balm and lipstick together. The packaging was so premium I couldn't believe it was homemade! The lip balm keeps my lips moisturized all day. Best herbal products I've ever tried."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-tertiary-fixed-dim/20 flex items-center justify-center">
+                                <span class="text-primary font-headline text-base">S</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-on-surface text-sm">Santhiya Meena</h4>
+                                <p class="text-on-surface-variant text-xs">Kumbakonam, Tamil Nadu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-24 px-8 bg-surface-container-low">
+            <div class="max-w-3xl mx-auto">
+                <div class="section-line mx-auto mb-16 reveal"></div>
+                <div class="text-center mb-16 reveal">
+                    <span class="font-label text-[10px] uppercase tracking-[0.3em] text-secondary font-bold mb-4 block">Have Questions?</span>
+                    <h2 class="font-headline text-4xl text-primary italic shimmer-text leading-tight">Frequently Asked</h2>
+                </div>
+                <div class="space-y-4 reveal">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item border border-outline-variant/30 rounded-xl overflow-hidden bg-surface">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-6 text-left hover:bg-surface-container-low transition-colors">
+                            <span class="font-bold text-on-surface text-sm pr-4">Are all your products really homemade?</span>
+                            <span class="material-symbols-outlined text-primary faq-icon transition-transform duration-300">expand_more</span>
+                        </button>
+                        <div class="faq-answer" style="max-height:0; overflow:hidden; transition: max-height 0.4s ease;">
+                            <p class="px-6 pb-6 text-on-surface-variant text-sm leading-relaxed font-light">Yes, 100%! Every single product is handcrafted at home in small batches. We never use factory production. Each item is made with personal care using pure, natural botanical ingredients sourced locally.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item border border-outline-variant/30 rounded-xl overflow-hidden bg-surface">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-6 text-left hover:bg-surface-container-low transition-colors">
+                            <span class="font-bold text-on-surface text-sm pr-4">Are these products safe for sensitive skin?</span>
+                            <span class="material-symbols-outlined text-primary faq-icon transition-transform duration-300">expand_more</span>
+                        </button>
+                        <div class="faq-answer" style="max-height:0; overflow:hidden; transition: max-height 0.4s ease;">
+                            <p class="px-6 pb-6 text-on-surface-variant text-sm leading-relaxed font-light">Absolutely. Our products are made with natural herbs and botanicals without harsh chemicals. If you have specific allergies, please message us on Instagram and we'll guide you.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item border border-outline-variant/30 rounded-xl overflow-hidden bg-surface">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-6 text-left hover:bg-surface-container-low transition-colors">
+                            <span class="font-bold text-on-surface text-sm pr-4">How do I place an order?</span>
+                            <span class="material-symbols-outlined text-primary faq-icon transition-transform duration-300">expand_more</span>
+                        </button>
+                        <div class="faq-answer" style="max-height:0; overflow:hidden; transition: max-height 0.4s ease;">
+                            <p class="px-6 pb-6 text-on-surface-variant text-sm leading-relaxed font-light">Simply click the "Instagram" button on any product. Your order details will be copied — just paste it in our Instagram DM! We'll confirm availability and arrange delivery.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            function toggleFaq(btn) {
+                var answer = btn.nextElementSibling;
+                var icon = btn.querySelector('.faq-icon');
+                var isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+                document.querySelectorAll('.faq-answer').forEach(function(a) { a.style.maxHeight = '0px'; });
+                document.querySelectorAll('.faq-icon').forEach(function(i) { i.style.transform = 'rotate(0deg)'; });
+                if (!isOpen) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            }
+        </script>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-stone-100 dark:bg-stone-900 w-full py-12 px-8 flex flex-col items-center gap-8" id="contact">
+        <div class="reveal flex items-center gap-3">
+            <img src="brand logo.png" alt="Green Herbalz Logo"
+                class="h-8 md:h-10 w-auto object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all">
+            <span class="text-lg font-headline text-red-950 dark:text-red-100 uppercase tracking-widest">Green
+                Herbalz</span>
+        </div>
+        <div
+            class="w-full max-w-md bg-white/50 dark:bg-black/20 p-8 rounded-xl backdrop-blur-sm border border-outline-variant/20">
+            <h5 class="reveal font-headline text-xl italic mb-4 text-center">Get in Touch</h5>
+            <div class="flex flex-col gap-4 items-center">
+                <a class="font-body text-sm flex items-center gap-2 text-primary hover:opacity-80 transition-opacity"
+                    href="https://www.instagram.com/_green.herbalz_?igsh=aXBxZ2Ztb3Bwajk4" target="_blank"
+                    rel="noopener noreferrer">
+                    <span class="material-symbols-outlined text-lg" data-icon="chat">chat</span> Chat with us on
+                    Instagram
+                </a>
+                <a class="font-body text-sm flex items-center gap-2 text-red-600 hover:opacity-80 transition-opacity"
+                    href="https://youtube.com/@greenherbalz?si=aAMFiM1SClPQGlCb" target="_blank"
+                    rel="noopener noreferrer">
+                    <span class="material-symbols-outlined text-lg" data-icon="play_arrow">play_arrow</span> Subscribe on
+                    YouTube
+                </a>
+                <p class="text-xs text-outline text-center">Watch for new updates!</p>
+                <p class="font-body text-sm flex items-center gap-2 text-outline">
+                    <span class="material-symbols-outlined text-lg">location_on</span>
+                    <a href="https://maps.app.goo.gl/an3jYJyY3eYxtoN86" target="_blank" class="hover:underline">Visit
+                        our store, Tamilnadu, Thiruvarur, Koradacheri</a>
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+            <a class="font-label text-xs uppercase tracking-[0.05em] text-stone-500 dark:text-stone-400 hover:border-b hover:border-amber-700 transition-all"
+                href="#">Privacy Policy</a>
+            <a class="font-label text-xs uppercase tracking-[0.05em] text-stone-500 dark:text-stone-400 hover:border-b hover:border-amber-700 transition-all"
+                href="#">Shipping &amp; Returns</a>
+            <a class="font-label text-xs uppercase tracking-[0.05em] text-stone-500 dark:text-stone-400 hover:border-b hover:border-amber-700 transition-all"
+                href="#">Accessibility</a>
+            <a class="font-label text-xs uppercase tracking-[0.05em] text-primary dark:text-primary-fixed border-b border-primary"
+                href="#contact">Contact</a>
+        </div>
+        <div class="font-label text-xs uppercase tracking-[0.05em] text-red-950 dark:text-red-200">
+            © 2024 Green Herbalz. All Rights Reserved.
+        </div>
+    </footer>
+    <!-- Mobile Navigation Shell -->
+    <div class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <div
+            class="bg-surface/80 backdrop-blur-2xl rounded-full px-6 py-3 flex gap-8 items-center shadow-2xl border border-outline-variant/10">
+            <a href="#" class="text-primary flex flex-col items-center">
+                <span class="material-symbols-outlined text-[20px]"
+                    style="font-variation-settings: 'FILL' 1;">home</span>
+                <span class="font-label text-[10px] uppercase tracking-tighter mt-1 font-bold">Home</span>
+            </a>
+            <a href="#buy" class="text-outline flex flex-col items-center hover:text-primary">
+                <span class="material-symbols-outlined text-[20px]">grid_view</span>
+                <span class="font-label text-[10px] uppercase tracking-tighter mt-1">Shop</span>
+            </a>
+            <a href="#faq" class="text-outline flex flex-col items-center hover:text-primary">
+                <span class="material-symbols-outlined text-[20px]">contact_support</span>
+                <span class="font-label text-[10px] uppercase tracking-tighter mt-1">Help</span>
+            </a>
+            <a href="https://www.instagram.com/_green.herbalz_/" target="_blank"
+                class="text-outline flex flex-col items-center hover:text-primary">
+                <span class="material-symbols-outlined text-[20px]">account_circle</span>
+                <span class="font-label text-[10px] uppercase tracking-tighter mt-1">Community</span>
+            </a>
+        </div>
+    </div>
+    <script>
+        /* ── Intersection Observer: Scroll Reveal Engine ── */
+        (function () {
+            var revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .section-line');
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+            revealEls.forEach(function (el) { observer.observe(el); });
+
+            /* ── Navbar shrink on scroll ── */
+            var nav = document.getElementById('mainNav');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 60) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            }, { passive: true });
+
+            /* ── Parallax on hero video ── */
+            var heroSection = document.querySelector('main > section:first-child');
+            window.addEventListener('scroll', function () {
+                if (!heroSection) return;
+                var rect = heroSection.getBoundingClientRect();
+                if (rect.bottom > 0) {
+                    var offset = window.scrollY * 0.2;
+                    var video = heroSection.querySelector('video');
+                    if (video) video.style.transform = 'translateY(' + offset + 'px) scale(1.05)';
+                }
+            }, { passive: true });
+        })();
+    </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'hi,ta,te,ml,kn,mr,bn,gu,pa,ur,or,as,sa,mai,bho,doi,ks,ne,sd' }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        document.getElementById('themeToggle').addEventListener('click', function () {
+            document.documentElement.classList.toggle('dark');
+            var isDark = document.documentElement.classList.contains('dark');
+            this.querySelector('.material-symbols-outlined').textContent = isDark ? 'light_mode' : 'dark_mode';
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Soap Customizer Drawer Logic
+            const soapDrawer = document.getElementById('soapDrawer');
+            const soapBackdrop = document.getElementById('soapBackdrop');
+            const closeSoapDrawer = document.getElementById('closeSoapDrawer');
+
+            function openDrawer() {
+                if(soapDrawer) soapDrawer.style.transform = 'translateX(0)';
+                if(soapBackdrop) {
+                    soapBackdrop.classList.remove('hidden');
+                    void soapBackdrop.offsetWidth;
+                    soapBackdrop.classList.add('opacity-100');
+                }
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeDrawer() {
+                if(soapDrawer) soapDrawer.style.transform = 'translateX(100%)';
+                if(soapBackdrop) {
+                    soapBackdrop.classList.remove('opacity-100');
+                    setTimeout(() => {
+                        soapBackdrop.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    }, 500);
+                }
+            }
+
+            document.querySelectorAll('.open-soap-drawer').forEach(btn => btn.addEventListener('click', openDrawer));
+            if (closeSoapDrawer) closeSoapDrawer.addEventListener('click', closeDrawer);
+            if (soapBackdrop) soapBackdrop.addEventListener('click', closeDrawer);
+
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const initSoapCustomizer = (classPrefix, idPrefix) => {
+                const shapeBtns = document.querySelectorAll(`.${classPrefix}-shape-btn`);
+                const weightBtns = document.querySelectorAll(`.${classPrefix}-weight-btn`);
+                let selectedShape = '';
+                let selectedWeight = '';
+
+                const updateSelection = (btns, clickedBtn, type) => {
+                    btns.forEach(btn => {
+                        // Reset all to unselected styles
+                        btn.classList.remove('bg-primary-container', 'text-on-primary', 'border-primary');
+                    });
+                    // Add selected styles
+                    clickedBtn.classList.add('bg-primary-container', 'text-on-primary', 'border-primary');
+                    if(type === 'shape') selectedShape = clickedBtn.innerText.trim();
+                    if(type === 'weight') selectedWeight = clickedBtn.innerText.trim();
+                };
+
+                shapeBtns.forEach(btn => {
+                    btn.addEventListener('click', () => updateSelection(shapeBtns, btn, 'shape'));
+                });
+
+                weightBtns.forEach(btn => {
+                    btn.addEventListener('click', () => updateSelection(weightBtns, btn, 'weight'));
+                });
+
+                const applyBtn = document.getElementById(`${idPrefix}ApplyOrderBtn`);
+                const selectEl = document.getElementById(`${idPrefix}IngredientSelect`);
+                const customInputEl = document.getElementById(`${idPrefix}CustomIngredient`);
+
+                if(applyBtn) {
+                    applyBtn.addEventListener('click', () => {
+                        if(!selectedShape || !selectedWeight) {
+                            alert('Please select both a shape and a weight.');
+                            return;
+                        }
+                        let ingredient = selectEl.value;
+                        if(ingredient === 'custom') {
+                            ingredient = customInputEl.value.trim();
+                            if(!ingredient) {
+                                alert('Please enter your custom ingredient.');
+                                return;
+                            }
+                        } else {
+                            ingredient = selectEl.options[selectEl.selectedIndex].text;
+                        }
+
+                        const decodedMsg = `Hello! I would like to order a custom Artisan Soap.\n\nShape: ${selectedShape}\nWeight: ${selectedWeight}\nIngredient: ${ingredient}`;
+                        
+                        // Instagram doesn't support auto-typing text from URLs anymore.
+                        // The reliable workaround is to copy it to clipboard, then redirect.
+                        navigator.clipboard.writeText(decodedMsg).then(() => {
+                            alert('Your custom order details have been copied to your clipboard!\n\nJust Paste (Ctrl+V or Long-Press) them in our Instagram chat to send your order.');
+                            const igUrl = `https://ig.me/m/_green.herbalz_`;
+                            window.location.href = igUrl;
+                        }).catch(err => {
+                            // Fallback if clipboard blocked by browser
+                            const igUrl = `https://ig.me/m/_green.herbalz_`;
+                            window.location.href = igUrl;
+                        });
+                    });
+                }
+            };
+
+            if(document.getElementById('mobileApplyOrderBtn')) {
+                initSoapCustomizer('mob', 'mobile');
+            } 
+            if(document.getElementById('desktopApplyOrderBtn')) {
+                initSoapCustomizer('desk', 'desktop');
+            }
+        });
+    </script>
+</body>
+
+</html>
