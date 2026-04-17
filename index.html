@@ -798,6 +798,15 @@
                 </select>
                 <input type="text" id="desktopCustomIngredient" placeholder="Type your custom ingredient..." class="w-full mt-3 p-4 border border-outline-variant rounded-lg bg-surface text-on-surface focus:ring-primary focus:border-primary text-sm" style="display: none;">
             </div>
+            <div class="mb-10">
+                <h3 class="font-bold text-lg mb-4 text-on-surface">Quantity</h3>
+                <div class="flex items-center gap-4">
+                    <button type="button" onclick="const input = document.getElementById('desktopQuantity'); input.value = Math.max(5, parseInt(input.value) - 1)" class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors text-on-surface">-</button>
+                    <input type="number" id="desktopQuantity" value="5" min="5" class="w-20 text-center p-2 border border-outline-variant rounded-lg bg-surface text-on-surface font-bold">
+                    <button type="button" onclick="const input = document.getElementById('desktopQuantity'); input.value = parseInt(input.value) + 1" class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors text-on-surface">+</button>
+                </div>
+                <p class="text-[10px] text-outline mt-2 uppercase tracking-widest font-bold">Minimum Order: 5 Units</p>
+            </div>
         </div>
         <div class="p-8 border-t border-outline-variant bg-surface-container-low">
             <button id="desktopApplyOrderBtn" type="button" class="w-full py-4 bg-primary text-on-primary rounded-full font-bold uppercase tracking-widest hover:bg-primary-container hover:text-on-primary-container transition-colors btn-magnetic text-sm">
@@ -1760,7 +1769,15 @@
                             ingredient = selectEl.options[selectEl.selectedIndex].text;
                         }
 
-                        const decodedMsg = `Hello! I would like to order a custom Artisan Soap.\n\nShape: ${selectedShape}\nWeight: ${selectedWeight}\nIngredient: ${ingredient}`;
+                        const qtyEl = document.getElementById(`${idPrefix}Quantity`);
+                        const quantity = qtyEl ? parseInt(qtyEl.value) : 1;
+
+                        if (quantity < 5) {
+                            alert('Minimum order quantity for custom soaps is 5 units.');
+                            return;
+                        }
+
+                        const decodedMsg = `Hello! I would like to order a custom Artisan Soap.\n\nShape: ${selectedShape}\nWeight: ${selectedWeight}\nIngredient: ${ingredient}\nQuantity: ${quantity} units`;
                         
                         // Instagram doesn't support auto-typing text from URLs anymore.
                         // The reliable workaround is to copy it to clipboard, then redirect.
