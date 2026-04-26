@@ -10,7 +10,7 @@ export default function AboutSection() {
             <div className="absolute -inset-4 border border-outline-variant/30 -z-10"></div>
             <Image
               src="/product-henna.png"
-              alt="Botanical Ingredients"
+              alt="Natural botanical ingredients used in Green Herbalz homemade skincare products"
               fill
               className="object-cover mix-blend-multiply opacity-50 group-hover:scale-105 transition-transform duration-1000 origin-center"
             />

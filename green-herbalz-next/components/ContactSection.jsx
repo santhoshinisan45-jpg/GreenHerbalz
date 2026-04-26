@@ -1,6 +1,6 @@
 export default function ContactSection() {
   return (
-    <section id="contact" className="py-20 md:py-32 bg-primary">
+    <section id="contact" className="py-20 md:py-32 bg-primary" aria-label="Contact Green Herbalz">
       <div className="max-w-screen-xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-12 md:gap-20">
         <div className="reveal-left">
           <span className="font-label text-xs uppercase tracking-[0.4em] text-tertiary-fixed-dim font-bold mb-6 block">
@@ -76,6 +76,7 @@ export default function ContactSection() {
                 href="https://wa.me/9942738921?text=Hi! I'm interested in Green Herbalz products. Can you help me?"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Chat with Green Herbalz on WhatsApp"
                 className="w-full py-4 bg-green-600 text-white font-label text-xs uppercase tracking-widest font-bold rounded-full hover:bg-green-700 transition-colors flex items-center justify-center gap-3 btn-magnetic"
               >
                 <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
@@ -87,6 +88,7 @@ export default function ContactSection() {
                 href="https://www.instagram.com/_green.herbalz_"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow Green Herbalz on Instagram"
                 className="w-full py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-label text-xs uppercase tracking-widest font-bold rounded-full hover:opacity-90 transition-opacity flex items-center justify-center gap-3 btn-magnetic"
               >
                 <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>

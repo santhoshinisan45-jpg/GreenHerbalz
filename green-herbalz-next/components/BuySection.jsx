@@ -78,15 +78,15 @@ function ProductSlider({ slides }) {
       >
         {slides.map((src, i) => (
           <div key={i} className="w-full h-full flex-shrink-0 relative">
-            <Image src={src} alt={`Soap variant ${i + 1}`} fill className="object-cover" />
+            <Image src={src} alt={`Green Herbalz handmade botanical Soap variant ${i + 1}`} fill className="object-cover" />
           </div>
         ))}
       </div>
-      <button onClick={prev} className="absolute top-1/2 left-2 -translate-y-1/2 bg-surface/80 p-1.5 rounded-full shadow-md text-primary hover:bg-surface opacity-0 group-hover/slider:opacity-100 transition-opacity z-10 flex items-center justify-center">
-        <span className="material-symbols-outlined text-base">chevron_left</span>
+      <button onClick={prev} aria-label="Previous product image" className="absolute top-1/2 left-2 -translate-y-1/2 bg-surface/80 p-1.5 rounded-full shadow-md text-primary hover:bg-surface opacity-0 group-hover/slider:opacity-100 transition-opacity z-10 flex items-center justify-center">
+        <span className="material-symbols-outlined text-base" aria-hidden="true">chevron_left</span>
       </button>
-      <button onClick={next} className="absolute top-1/2 right-2 -translate-y-1/2 bg-surface/80 p-1.5 rounded-full shadow-md text-primary hover:bg-surface opacity-0 group-hover/slider:opacity-100 transition-opacity z-10 flex items-center justify-center">
-        <span className="material-symbols-outlined text-base">chevron_right</span>
+      <button onClick={next} aria-label="Next product image" className="absolute top-1/2 right-2 -translate-y-1/2 bg-surface/80 p-1.5 rounded-full shadow-md text-primary hover:bg-surface opacity-0 group-hover/slider:opacity-100 transition-opacity z-10 flex items-center justify-center">
+        <span className="material-symbols-outlined text-base" aria-hidden="true">chevron_right</span>
       </button>
     </div>
   );
@@ -126,7 +126,7 @@ function ProductCard({ product, stagger }) {
         ) : (
           <div className="relative bg-surface-container-low aspect-[4/5] overflow-hidden rounded-lg group">
             <Image
-              alt={product.name}
+              alt={`Green Herbalz homemade organic ${product.name}`}
               className="w-full h-full object-cover absolute inset-0 z-10 group-hover:opacity-0 transition-opacity duration-300"
               src={product.image}
               fill

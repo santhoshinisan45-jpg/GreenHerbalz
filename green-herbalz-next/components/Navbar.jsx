@@ -89,12 +89,13 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-3 md:gap-4">
-          <span
+          <button
             onClick={toggleDark}
+            aria-label="Toggle dark mode"
             className="material-symbols-outlined text-stone-600 hover:text-primary dark:text-yellow-400 dark:hover:text-yellow-300 text-2xl cursor-pointer transition-colors flex items-center"
           >
             {isDark ? "light_mode" : "dark_mode"}
-          </span>
+          </button>
           {/* Language Selector */}
           <div className="relative">
             <button
@@ -120,6 +121,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             className="md:hidden"
+            aria-label="Visit our Instagram"
           >
             <span className="material-symbols-outlined text-pink-500 dark:text-pink-400 text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
               photo_camera
@@ -139,7 +141,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div translate="no" className={`mobile-menu-overlay notranslate ${mobileMenuOpen ? "active" : ""}`}>
-        <button onClick={closeMobileMenu} className="mobile-menu-close">
+        <button onClick={closeMobileMenu} className="mobile-menu-close" aria-label="Close menu">
           <span className="material-symbols-outlined text-primary">close</span>
         </button>
         {navLinks.map((link) => (

@@ -30,11 +30,12 @@ export default function HeroSection() {
       className="relative min-h-[600px] md:min-h-[921px] flex flex-col md:flex-row items-center overflow-hidden"
     >
       <div className="w-full md:w-1/2 p-8 md:p-20 z-10 reveal-left">
-        <h1 className="font-headline text-5xl md:text-8xl leading-none text-primary italic -tracking-[0.04em] mb-8">
+        <h1 className="sr-only">100% Homemade Botanical Skincare | Green Herbalz</h1>
+        <h2 className="font-headline text-5xl md:text-8xl leading-none text-primary italic -tracking-[0.04em] mb-8">
           Nature&apos;s <br />
           <span className="text-stroke not-italic font-bold">Deepest</span> <br />
           Secrets.
-        </h1>
+        </h2>
         <p className="max-w-md text-on-surface-variant text-base md:text-lg mb-12 font-light leading-relaxed">
           Every product is lovingly homemade in small batches — pure botanical
           science crafted by hand. No factories, no mass production. Just 100%
