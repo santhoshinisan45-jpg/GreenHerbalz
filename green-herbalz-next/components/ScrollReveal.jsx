@@ -11,8 +11,8 @@ export default function ScrollReveal() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-          } else {
-            entry.target.classList.remove("visible");
+            // Once revealed, stop observing — no need to re-animate
+            observer.unobserve(entry.target);
           }
         });
       },

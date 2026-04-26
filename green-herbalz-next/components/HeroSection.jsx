@@ -38,31 +38,8 @@ function LazyVideo({ src, className, ...props }) {
 }
 
 export default function HeroSection() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        if (!sectionRef.current) { ticking = false; return; }
-        const rect = sectionRef.current.getBoundingClientRect();
-        if (rect.bottom > 0) {
-          const offset = window.scrollY * 0.25;
-          const video = sectionRef.current.querySelector("video");
-          if (video) video.style.transform = `translate3d(0, ${offset}px, 0) scale(1.05)`;
-        }
-        ticking = false;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
       className="relative min-h-[600px] md:min-h-[921px] flex flex-col md:flex-row items-center overflow-hidden"
     >
       <div className="w-full md:w-1/2 p-8 md:p-20 z-10 reveal-left">

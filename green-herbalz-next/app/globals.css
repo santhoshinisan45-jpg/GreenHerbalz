@@ -118,38 +118,35 @@ body {
 /* ── Scroll-Reveal Animation System ── */
 .reveal {
   opacity: 0;
-  transform: translateY(60px);
+  transform: translate3d(0, 60px, 0);
   transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
 }
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .reveal-left {
   opacity: 0;
-  transform: translateX(-80px);
+  transform: translate3d(-80px, 0, 0);
   transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
 }
 .reveal-left.visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .reveal-right {
   opacity: 0;
-  transform: translateX(80px);
+  transform: translate3d(80px, 0, 0);
   transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
 }
 .reveal-right.visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .reveal-scale {
@@ -157,7 +154,6 @@ body {
   transform: scale(0.92);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
 }
 .reveal-scale.visible {
   opacity: 1;
@@ -185,11 +181,7 @@ html.dark nav.main-nav.scrolled {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* ── Hero Parallax ── */
-.hero-parallax {
-  transition: transform 0.1s linear;
-  will-change: transform;
-}
+/* ── Hero Parallax (removed for mobile performance) ── */
 
 /* ── Float Card ── */
 .hero-float-card {
@@ -288,8 +280,7 @@ html.dark nav.main-nav.scrolled {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(253, 248, 248, 0.95);
-  backdrop-filter: blur(12px);
+  background: #fdf8f8;
   border-top: 1px solid rgba(218, 192, 193, 0.3);
   padding: 8px 16px;
   padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
@@ -386,11 +377,22 @@ html.dark nav.main-nav.scrolled {
     transform: none !important;
     transition: none !important;
   }
-  .marquee-content { animation: none !important; }
+  .marquee-scroll { animation: none !important; }
   .hero-float-card { animation: none !important; }
   .shimmer-text {
     animation: none !important;
     -webkit-text-fill-color: #4d0514 !important;
+  }
+}
+
+/* ── Mobile Performance: pause costly animations ── */
+@media (max-width: 767px) {
+  .hero-float-card {
+    animation: none;
+  }
+  .shimmer-text {
+    animation: none;
+    -webkit-text-fill-color: #4d0514;
   }
 }
 

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 
 export default function Navbar() {
@@ -7,9 +7,17 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const scrolledRef = useRef(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => {
+      const isScrolled = window.scrollY > 80;
+      // Only trigger React re-render when state actually changes
+      if (isScrolled !== scrolledRef.current) {
+        scrolledRef.current = isScrolled;
+        setScrolled(isScrolled);
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -42,7 +50,7 @@ export default function Navbar() {
       <nav
         id="mainNav"
         translate="no"
-        className={`main-nav notranslate fixed top-0 w-full z-50 bg-white dark:bg-stone-950 backdrop-blur-xl flex justify-between items-center px-4 md:px-8 py-4 border-b border-stone-200/60 dark:border-stone-800 ${
+        className={`main-nav notranslate fixed top-0 w-full z-50 bg-white dark:bg-stone-950 flex justify-between items-center px-4 md:px-8 py-4 border-b border-stone-200/60 dark:border-stone-800 ${
           scrolled ? "scrolled" : ""
         }`}
       >
