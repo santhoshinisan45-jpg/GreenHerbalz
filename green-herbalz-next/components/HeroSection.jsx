@@ -1,5 +1,41 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+function LazyVideo({ src, className, ...props }) {
+  const videoRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      className={className}
+      autoPlay={isVisible}
+      loop
+      muted
+      playsInline
+      preload="none"
+      {...props}
+    >
+      {isVisible && <source src={src} type="video/mp4" />}
+    </video>
+  );
+}
 
 export default function HeroSection() {
   const sectionRef = useRef(null);
@@ -55,16 +91,10 @@ export default function HeroSection() {
       </div>
       <div className="w-full md:w-1/2 h-[400px] md:h-[921px] relative reveal-right">
         <div className="absolute -top-20 -left-20 w-full h-full bg-surface-container-low -z-10"></div>
-        <video
-          preload="auto"
+        <LazyVideo
+          src="/lipstick-video.mp4"
           className="w-full h-full object-cover shadow-2xl rounded-sm"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src="/lipstick-video.mp4" type="video/mp4" />
-        </video>
+        />
         <div className="absolute bottom-10 right-4 md:right-10 bg-surface/80 backdrop-blur-md p-4 md:p-6 max-w-xs border border-outline-variant/10 hero-float-card">
           <span className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary font-bold block mb-2">
             Featured Extract

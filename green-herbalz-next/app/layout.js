@@ -464,6 +464,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${notoSerif.variable} ${plusJakarta.variable}`} suppressHydrationWarning>
       <head>
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://translate.google.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"

@@ -1,17 +1,20 @@
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import MarqueeBanner from "@/components/MarqueeBanner";
-import ProductGrid from "@/components/ProductGrid";
-import SoapShowcase from "@/components/SoapShowcase";
-import AboutSection from "@/components/AboutSection";
-import SoapCustomizer from "@/components/SoapCustomizer";
-import BuySection from "@/components/BuySection";
-import Testimonials from "@/components/Testimonials";
-import FaqSection from "@/components/FaqSection";
-import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import GoogleTranslate from "@/components/GoogleTranslate";
+
+// Lazy load below-fold components to reduce initial JS bundle
+const ProductGrid = dynamic(() => import("@/components/ProductGrid"));
+const SoapShowcase = dynamic(() => import("@/components/SoapShowcase"));
+const AboutSection = dynamic(() => import("@/components/AboutSection"));
+const SoapCustomizer = dynamic(() => import("@/components/SoapCustomizer"));
+const BuySection = dynamic(() => import("@/components/BuySection"));
+const Testimonials = dynamic(() => import("@/components/Testimonials"));
+const FaqSection = dynamic(() => import("@/components/FaqSection"));
+const ContactSection = dynamic(() => import("@/components/ContactSection"));
+const Footer = dynamic(() => import("@/components/Footer"));
 
 export default function Home() {
   return (

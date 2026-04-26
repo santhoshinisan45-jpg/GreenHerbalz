@@ -12,6 +12,8 @@ export default function AboutSection() {
               src="/product-henna.png"
               alt="Natural botanical ingredients used in Green Herbalz homemade skincare products"
               fill
+              loading="lazy"
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover mix-blend-multiply opacity-50 group-hover:scale-105 transition-transform duration-1000 origin-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container-highest via-surface-container-highest/90 to-surface-container-highest/30"></div>

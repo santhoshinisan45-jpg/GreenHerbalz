@@ -130,11 +130,13 @@ function ProductCard({ product, stagger }) {
               className="w-full h-full object-cover absolute inset-0 z-10 group-hover:opacity-0 transition-opacity duration-300"
               src={product.image}
               fill
+              loading="lazy"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
             {product.video && (
               <video
                 className="w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                autoPlay loop muted playsInline preload="metadata"
+                autoPlay loop muted playsInline preload="none"
               >
                 <source src={product.video} type="video/mp4" />
               </video>

@@ -1,6 +1,45 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+
+function LazyVideo({ src, className, ...props }) {
+  const videoRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      className={className}
+      autoPlay={isVisible}
+      loop
+      muted
+      playsInline
+      preload="none"
+      {...props}
+    >
+      {isVisible && <source src={src} type="video/mp4" />}
+    </video>
+  );
+}
+
 export default function ProductGrid() {
   return (
-    <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto">
+    <section className="py-20 md:py-32 px-4 md:px-8 max-w-screen-2xl mx-auto" aria-label="Product Spotlight">
       <div className="section-line mx-auto mb-20 reveal"></div>
       <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8 reveal">
         <div>
@@ -29,31 +68,19 @@ export default function ProductGrid() {
               Step 01: Purify
             </p>
           </div>
-          <video
-            preload="auto"
+          <LazyVideo
+            src="/lip-balm-video.mp4"
             className="w-full h-72 md:h-[600px] object-cover group-hover:scale-105 transition-transform duration-700"
-            autoPlay
-            loop
-            muted
-            playsInline
-          >
-            <source src="/lip-balm-video.mp4" type="video/mp4" />
-          </video>
+          />
         </div>
         {/* Small Grid */}
         <div className="md:col-span-5 flex flex-col gap-8 md:gap-12">
           <div className="bg-surface-container p-6 md:p-8 group reveal-scale stagger-2">
             <div className="relative overflow-hidden mb-8">
-              <video
-                preload="auto"
+              <LazyVideo
+                src="/henna-video.mp4"
                 className="w-full h-60 md:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
-                autoPlay
-                loop
-                muted
-                playsInline
-              >
-                <source src="/henna-video.mp4" type="video/mp4" />
-              </video>
+              />
             </div>
             <div className="flex justify-between items-start">
               <div>
